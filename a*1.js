@@ -1,167 +1,157 @@
 class Vertice {
-  constructor(rotulo, distanciaObjetivo) {
-    this.rotulo = rotulo;
-    this.distanciaObjetivo = distanciaObjetivo;
-    this.visitado = false;
-    this.adjacentes = [];
-  }
-
-  adicionaAdjacente(adjacente) {
-    this.adjacentes.push(adjacente);
-  }
-
-  mostraAdjacentes(){
-    for(let i in this.adjacentes){
-      console.log(this.adjacentes[i].vertice.rotulo, this.adjacentes[i].custo);
+    constructor(rotulo, x, y) {
+        this.rotulo = rotulo;
+        this.x = x;
+        this.y = y;
+        this.visitado = false;
+        this.adjacentes = [];
     }
-  }
+
+    adicionaAdjacente(adjacente) {
+        this.adjacentes.push(adjacente);
+    }
+
+    mostraAdjacentes() {
+        for (let i in this.adjacentes) {
+            console.log(this.adjacentes[i].vertice.rotulo, this.adjacentes[i].custo);
+        }
+    }
+
+    heuristica(objetivo) {
+        return Math.abs(this.x - objetivo.x) + Math.abs(this.y - objetivo.y);
+    }
 }
 
 class Adjacente {
-  constructor(vertice, custo) {
-    this.vertice = vertice;
-    this.custo = custo;
-    this.distanciaAEstrela = this.vertice.distanciaObjetivo + this.custo;
-  }
+    constructor(vertice, custo) {
+        this.vertice = vertice;
+        this.custo = custo;
+        this.distanciaAEstrela = 0;
+    }
+
+    calcularDistanciaAEstrela(objetivo) {
+        this.distanciaAEstrela = this.custo + this.vertice.heuristica(objetivo);
+    }
 }
 
 class Grafo {
     constructor() {
-        this.arad = new Vertice("arad", 360);
-        this.zerind = new Vertice("zerind", 374);
-        this.oradea = new Vertice("oradea", 380);
-        this.sibiu = new Vertice("sibiu", 253);
-        this.timisoara = new Vertice("timisoara", 329);
-        this.lugoj = new Vertice("lugoj", 244);
-        this.mehadia = new Vertice("mehadia", 241);
-        this.dobreta = new Vertice("dobreta", 242);
-        this.craiova = new Vertice("craiova", 160);
-        this.rimnicu = new Vertice("rimnicu", 193);
-        this.fagaras = new Vertice("fagaras", 178);
-        this.pitesti = new Vertice("pitesti", 98);
-        this.bucharest = new Vertice("bucharest", 0);
-        this.giurgiu = new Vertice("giurgiu", 77);
+        this.blocof = new Vertice("Bloco F", 23, 16);
+        this.f09 = new Vertice("F09", 21, 15);
+        this.escada = new Vertice("Escada", 25, 17);
+        this.blocoe = new Vertice("Bloco E", 31, 16);
+        this.e08 = new Vertice("E08", 29, 14);
 
-        this.arad.adicionaAdjacente(new Adjacente(this.zerind, 75));
-        this.arad.adicionaAdjacente(new Adjacente(this.sibiu, 140));
-        this.arad.adicionaAdjacente(new Adjacente(this.timisoara, 118));
+        this.blocof.adicionaAdjacente(new Adjacente(this.f09, 2));
+        this.blocof.adicionaAdjacente(new Adjacente(this.escada, 4));
 
-        this.zerind.adicionaAdjacente(new Adjacente(this.arad, 75));
-        this.zerind.adicionaAdjacente(new Adjacente(this.oradea, 71));
+        this.f09.adicionaAdjacente(new Adjacente(this.blocof, 2));
 
-        this.oradea.adicionaAdjacente(new Adjacente(this.zerind, 71));
-        this.oradea.adicionaAdjacente(new Adjacente(this.sibiu, 151));
+        this.escada.adicionaAdjacente(new Adjacente(this.blocof, 4));
+        this.escada.adicionaAdjacente(new Adjacente(this.blocoe, 8));
 
-        this.sibiu.adicionaAdjacente(new Adjacente(this.oradea, 151));
-        this.sibiu.adicionaAdjacente(new Adjacente(this.arad, 140));
-        this.sibiu.adicionaAdjacente(new Adjacente(this.fagaras, 99));
-        this.sibiu.adicionaAdjacente(new Adjacente(this.rimnicu, 80));
+        this.blocoe.adicionaAdjacente(new Adjacente(this.escada, 4));
+        this.blocoe.adicionaAdjacente(new Adjacente(this.e08, 2));
 
-        this.timisoara.adicionaAdjacente(new Adjacente(this.arad, 118));
-        this.timisoara.adicionaAdjacente(new Adjacente(this.lugoj, 111));
-
-        this.lugoj.adicionaAdjacente(new Adjacente(this.timisoara, 111));
-        this.lugoj.adicionaAdjacente(new Adjacente(this.mehadia, 70));
-
-        this.mehadia.adicionaAdjacente(new Adjacente(this.lugoj, 70));
-        this.mehadia.adicionaAdjacente(new Adjacente(this.dobreta, 75));
-
-        this.dobreta.adicionaAdjacente(new Adjacente(this.mehadia, 75));
-        this.dobreta.adicionaAdjacente(new Adjacente(this.craiova, 120));
-
-        this.craiova.adicionaAdjacente(new Adjacente(this.dobreta, 120));
-        this.craiova.adicionaAdjacente(new Adjacente(this.pitesti, 138));
-        this.craiova.adicionaAdjacente(new Adjacente(this.rimnicu, 146));
-
-        this.rimnicu.adicionaAdjacente(new Adjacente(this.craiova, 146));
-        this.rimnicu.adicionaAdjacente(new Adjacente(this.sibiu, 80));
-        this.rimnicu.adicionaAdjacente(new Adjacente(this.pitesti, 97));
-
-        this.fagaras.adicionaAdjacente(new Adjacente(this.sibiu, 99));
-        this.fagaras.adicionaAdjacente(new Adjacente(this.bucharest, 211));
-
-        this.pitesti.adicionaAdjacente(new Adjacente(this.rimnicu, 97));
-        this.pitesti.adicionaAdjacente(new Adjacente(this.craiova, 138));
-        this.pitesti.adicionaAdjacente(new Adjacente(this.bucharest, 101));
-
-        this.bucharest.adicionaAdjacente(new Adjacente(this.fagaras, 211));
-        this.bucharest.adicionaAdjacente(new Adjacente(this.pitesti, 101));
-        this.bucharest.adicionaAdjacente(new Adjacente(this.giurgiu, 90));
+        this.e08.adicionaAdjacente(new Adjacente(this.blocoe, 2));
     }
 }
 
-class VetorOrdenado{
-    constructor(capacidade){
+class VetorOrdenado {
+    constructor(capacidade) {
         this.capacidade = capacidade;
         this.ultimaPosicao = -1;
         this.valores = new Array(this.capacidade);
     }
 
-    inserir(adjacente){
-        if(this.ultimaPosicao === this.capacidade - 1){
+    inserir(adjacente) {
+        if (this.ultimaPosicao === this.capacidade - 1) {
             console.log("Capacidade máxima atingida");
-            return
+            return;
         }
-        let posicao = 0
-        for(let i = 0; i <= this.ultimaPosicao; i++){
-            posicao = i
-            if(this.valores[i].distanciaAEstrela > adjacente.distanciaAEstrela) break
+        let posicao = 0;
+        for (let i = 0; i <= this.ultimaPosicao; i++) {
+            posicao = i;
+            if (this.valores[i].distanciaAEstrela > adjacente.distanciaAEstrela) break;
 
-            if(i === this.ultimaPosicao) posicao = i + 1
+            if (i === this.ultimaPosicao) posicao = i + 1;
         }
-        let x = this.ultimaPosicao
-        while(x >= posicao){
-            this.valores[x + 1] = this.valores[x]
-            x--
+        let x = this.ultimaPosicao;
+        while (x >= posicao) {
+            this.valores[x + 1] = this.valores[x];
+            x--;
         }
-        this.valores[posicao] = adjacente
-        this.ultimaPosicao++
+        this.valores[posicao] = adjacente;
+        this.ultimaPosicao++;
     }
 
-    imprimir(){
-        if(this.ultimaPosicao === -1) console.log("Vetor vazio")
-        else{
-            for(let i = 0; i <= this.ultimaPosicao; i++){
-                console.log(i, " - ", this.valores[i].vertice.rotulo, " - ",
-                    this.valores[i].custo, " - ",
-                    this.valores[i].vertice.distanciaObjetivo, " - ",
+    imprimir(aEstrela) {
+        if (this.ultimaPosicao === -1) console.log("Vetor vazio");
+        else {
+            for (let i = 0; i <= this.ultimaPosicao; i++) {
+                console.log(
+                    this.valores[i].vertice.rotulo,
+                    " - ",
+                    this.valores[i].custo,
+                    " - ",
                     this.valores[i].distanciaAEstrela
-                )
+                );
             }
+
+            console.log("Custo total até o momento: ", aEstrela.custoTotal);
         }
+    }
+
+    pegar() {
+        if (this.ultimaPosicao === -1) return null;
+        return this.valores;
     }
 }
 
-class AEstrela{
-    constructor(objetivo){
-        this.objetivo = objetivo
-        this.encontrado = false
+class AEstrela {
+    constructor(objetivo) {
+        this.objetivo = objetivo;
+        this.encontrado = false;
+        this.custoTotal = 0;
+        this.caminho = [];
     }
 
-    buscar(atual){
-        console.log("--------------------------------")
-        console.log("Atual: ", atual.rotulo)
-        atual.visitado = true
+    buscar(atual) {
+        // console.log("--------------------------------");
+        // console.log("Atual: ", atual.rotulo);
+        atual.visitado = true;
+        this.caminho.push(atual.rotulo);
 
-        if(atual === this.objetivo) this.encontrado = true
-        else{
-            let vo = new VetorOrdenado(atual.adjacentes.length)
-            for(let i in atual.adjacentes){
-                if(atual.adjacentes[i].vertice.visitado === false){
-                    atual.adjacentes[i].vertice.visitado = true
-                    vo.inserir(atual.adjacentes[i])
+        if (atual === this.objetivo) {
+            this.encontrado = true;
+            return { caminho: this.caminho, custoTotal: this.custoTotal };
+        } else {
+            let vo = new VetorOrdenado(atual.adjacentes.length);
+            for (let i in atual.adjacentes) {
+                if (atual.adjacentes[i].vertice.visitado === false) {
+                    atual.adjacentes[i].vertice.visitado = true;
+                    atual.adjacentes[i].calcularDistanciaAEstrela(this.objetivo);
+                    vo.inserir(atual.adjacentes[i]);
                 }
             }
-            vo.imprimir()
+            // vo.imprimir(this);
 
-            if(vo.valores[0] != null){
-                this.buscar(vo.valores[0].vertice)
+            if (vo.valores[0] != null) {
+                this.custoTotal += vo.valores[0].custo;
+                return this.buscar(vo.valores[0].vertice);
             }
         }
+        return null
     }
 }
 
-const grafo = new Grafo()
+const grafo = new Grafo();
 
-const aEstrela = new AEstrela(grafo.bucharest)
-aEstrela.buscar(grafo.arad)
+const aEstrela = new AEstrela(grafo.e08);
+const res = aEstrela.buscar(grafo.f09);
+
+// console.log(res)
+res.caminho.forEach((caminho) => {
+    console.log(caminho);
+})
+console.log("Custo total: ", res.custoTotal);
