@@ -53,7 +53,7 @@ class Grafo {
         this.escada2 = new Vertice("Escada na esquerda", 27, 17);
         this.ap1 = new Vertice("Area publica na parte esquerda", 25, 19);
         this.ap2 = new Vertice("Area publica na parte central", 20, 30);
-        this.banheiroF = new Vertice("Banheiro do bloco F", 21, 17);
+        this.banheirof = new Vertice("Banheiro do bloco F", 21, 17);
         this.blocod = new Vertice("Bloco D", 23, 24);
         this.d01 = new Vertice("D01", 25, 29);
         this.d02 = new Vertice("D02", 25, 27);
@@ -145,6 +145,31 @@ class Grafo {
         this.refeitorio = new Vertice("Refeitorio", 4, 98);
         this.academia = new Vertice("Academia", 20, 110);
         this.ginasio = new Vertice("Ginásio", 24, 113);
+        this.blocoe = new Vertice("Bloco E", 0, 0);
+        this.e01 = new Vertice("E01", 0, 0);
+        this.e02 = new Vertice("E02", 0, 0);
+        this.e03 = new Vertice("E03", 0, 0);
+        this.e04 = new Vertice("E04", 0, 0);
+        this.e05 = new Vertice("E05", 0, 0);
+        this.e06 = new Vertice("E06", 0, 0);
+        this.e07 = new Vertice("E07", 0, 0);
+        this.e08 = new Vertice("E08", 0, 0);
+        this.banheiroe = new Vertice("Banheiro do bloco E", 0, 0);
+        this.entradae = new Vertice("Entrada bloco E", 0, 0);
+        this.saidae = new Vertice("Saida bloco E", 0, 0);
+        this.blococ = new Vertice("Bloco C", 0, 0);
+        this.c01 = new Vertice("C01 - repografia", 0, 0);
+        this.c02 = new Vertice("C02 - cozinha", 0, 0);
+        this.c03 = new Vertice("C03", 0, 0);
+        this.c04 = new Vertice("C04", 0, 0);
+        this.c05 = new Vertice("C05", 0, 0);
+        this.c06 = new Vertice("C06", 0, 0);
+        this.c07 = new Vertice("C07", 0, 0);
+        this.c08 = new Vertice("C08", 0, 0);
+        this.c09 = new Vertice("C09", 0, 0);
+        this.banheiroc = new Vertice("Banheiro do bloco C", 0, 0);
+        this.entradaprincipal = new Vertice("Entrada principal", 0, 0);
+        this.saidaprincipal = new Vertice("Saida principal", 0, 0);
 
     }
 
