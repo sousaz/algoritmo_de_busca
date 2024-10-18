@@ -196,17 +196,17 @@ class Grafo {
         // adjacentes do estacionamento aberto esquerdo
         this.estacionamento2.adicionaAdjacente(new Adjacente(this.estacionamento3, 5));
         this.estacionamento2.adicionaAdjacente(new Adjacente(this.rampae, 15));
-        this.estacionamento2.adicionaAdjacente(new Adjacente(this.estacionamento1, 40));
+        this.estacionamento2.adicionaAdjacente(new Adjacente(this.estacionamento1, 45));
         this.estacionamento2.adicionaAdjacente(new Adjacente(this.administracao, 30));
 
         // adjacentes do estacionamento aberto direito
-        this.estacionamento1.adicionaAdjacente(new Adjacente(this.estacionamento2, 40));
+        this.estacionamento1.adicionaAdjacente(new Adjacente(this.estacionamento2, 45));
         this.estacionamento1.adicionaAdjacente(new Adjacente(this.administracao, 15));
         this.estacionamento1.adicionaAdjacente(new Adjacente(this.guarita, 10));
 
         // adjacentes da guarita
         this.guarita.adicionaAdjacente(new Adjacente(this.estacionamento1, 10));
-        this.guarita.adicionaAdjacente(new Adjacente(this.morro2, 65));
+        this.guarita.adicionaAdjacente(new Adjacente(this.morro1, 45));
 
         // adjacentes da administracao
         this.administracao.adicionaAdjacente(new Adjacente(this.estacionamento2, 30));
@@ -219,25 +219,25 @@ class Grafo {
         this.pedagogico.adicionaAdjacente(new Adjacente(this.administracao, 50));
         this.pedagogico.adicionaAdjacente(new Adjacente(this.entradaprincipal, 42));
         this.pedagogico.adicionaAdjacente(new Adjacente(this.escadaentre, 13));
-        this.pedagogico.adicionaAdjacente(new Adjacente(this.morro2, 11));
+        this.pedagogico.adicionaAdjacente(new Adjacente(this.morro1, 11));
 
         // adjacentes do morro direita
-        this.morro2.adicionaAdjacente(new Adjacente(this.pedagogico, 11));
-        this.morro2.adicionaAdjacente(new Adjacente(this.guarita, 65));
-        this.morro2.adicionaAdjacente(new Adjacente(this.copa, 11));
-        this.morro2.adicionaAdjacente(new Adjacente(this.sbm, 5));
-        this.morro2.adicionaAdjacente(new Adjacente(this.biblioteca, 30));
-        this.morro2.adicionaAdjacente(new Adjacente(this.refeitorio, 93));
+        this.morro1.adicionaAdjacente(new Adjacente(this.pedagogico, 11));
+        this.morro1.adicionaAdjacente(new Adjacente(this.guarita, 45));
+        this.morro1.adicionaAdjacente(new Adjacente(this.copa, 11));
+        this.morro1.adicionaAdjacente(new Adjacente(this.sbm, 5));
+        this.morro1.adicionaAdjacente(new Adjacente(this.biblioteca, 30));
+        this.morro1.adicionaAdjacente(new Adjacente(this.refeitorio, 40));
 
         // adjacentes da copa
-        this.copa.adicionaAdjacente(new Adjacente(this.morro2, 11));
+        this.copa.adicionaAdjacente(new Adjacente(this.morro1, 11));
 
         // adjacentes do refetorio
-        this.refeitorio.adicionaAdjacente(new Adjacente(this.morro2, 93));
-        this.refeitorio.adicionaAdjacente(new Adjacente(this.academia, 42));
+        this.refeitorio.adicionaAdjacente(new Adjacente(this.morro1, 40));
+        this.refeitorio.adicionaAdjacente(new Adjacente(this.academia, 20));
 
         // adjacentes da academia
-        this.academia.adicionaAdjacente(new Adjacente(this.refeitorio, 42));
+        this.academia.adicionaAdjacente(new Adjacente(this.refeitorio, 20));
         this.academia.adicionaAdjacente(new Adjacente(this.ginasio, 7));
 
         // adjacentes do ginasio
@@ -245,14 +245,14 @@ class Grafo {
 
         // adjacentes da biblioteca
         //falta parte de dentro
-        this.biblioteca.adicionaAdjacente(new Adjacente(this.morro2, 30));
+        this.biblioteca.adicionaAdjacente(new Adjacente(this.morro1, 30));
         this.biblioteca.adicionaAdjacente(new Adjacente(this.escadaentre, 10));
         this.biblioteca.adicionaAdjacente(new Adjacente(this.b03s, 12));
 
         // adjacentes da escada entre blocos
         this.escadaentre.adicionaAdjacente(new Adjacente(this.biblioteca, 10));
         this.escadaentre.adicionaAdjacente(new Adjacente(this.pedagogico, 13));
-        this.escadaentre.adicionaAdjacente(new Adjacente(this.sbc, 8));
+        this.escadaentre.adicionaAdjacente(new Adjacente(this.sba, 8));
         this.escadaentre.adicionaAdjacente(new Adjacente(this.b03s, 20));
 
         // adjacentes da saida do mini auditorio
@@ -263,15 +263,15 @@ class Grafo {
 
         // adjacentes do auditorio
         this.auditorio.adicionaAdjacente(new Adjacente(this.b03s, 12));
-        this.auditorio.adicionaAdjacente(new Adjacente(this.morro1, 12));
+        this.auditorio.adicionaAdjacente(new Adjacente(this.morro2, 12));
 
         // adjacentes do morro esquerda
-        this.morro1.adicionaAdjacente(new Adjacente(this.auditorio, 12));
-        this.morro1.adicionaAdjacente(new Adjacente(this.blocoh, 5));
+        this.morro2.adicionaAdjacente(new Adjacente(this.auditorio, 12));
+        this.morro2.adicionaAdjacente(new Adjacente(this.blocoh, 5));
 
         // adjacentes do bloco H
         // falta fazer por dentro
-        this.blocoh.adicionaAdjacente(new Adjacente(this.morro1, 5));
+        this.blocoh.adicionaAdjacente(new Adjacente(this.morro2, 5));
         this.blocoh.adicionaAdjacente(new Adjacente(this.galpao, 96));
         this.blocoh.adicionaAdjacente(new Adjacente(this.saidae, 10));
         this.blocoh.adicionaAdjacente(new Adjacente(this.saidaprincipal, 45));
@@ -314,7 +314,7 @@ class Grafo {
         this.sba.adicionaAdjacente(new Adjacente(this.escadaentre, 8));
 
         // adjacentes saida do bloco M
-        this.sbm.adicionaAdjacente(new Adjacente(this.morro2, 5));
+        this.sbm.adicionaAdjacente(new Adjacente(this.morro1, 5));
 
 
 
@@ -394,8 +394,9 @@ class AEstrela {
         } else {
             let vo = new VetorOrdenado(atual.adjacentes.length);
             for (let i in atual.adjacentes) {
+                console.log(atual.adjacentes[i].vertice);
                 if (atual.adjacentes[i].vertice.visitado === false) {
-                    atual.adjacentes[i].vertice.visitado = true;
+                    // atual.adjacentes[i].vertice.visitado = true;
                     atual.adjacentes[i].calcularDistanciaAEstrela(this.objetivo);
                     vo.inserir(atual.adjacentes[i]);
                 }
@@ -407,17 +408,17 @@ class AEstrela {
                 return this.buscar(vo.valores[0].vertice);
             }
         }
-        return null
+        return this.caminho
     }
 }
 
 const grafo = new Grafo();
 
-const aEstrela = new AEstrela(grafo.entradaprincipal);
+const aEstrela = new AEstrela(grafo.academia);
 const res = aEstrela.buscar(grafo.guarita);
 
-// console.log(res)
-res.caminho.forEach((caminho) => {
-    console.log(caminho);
-})
-console.log("Custo total: ", res.custoTotal);
+console.log(res)
+// res.caminho.forEach((caminho) => {
+//     console.log(caminho);
+// })
+// console.log("Custo total: ", res.custoTotal);
