@@ -87,7 +87,7 @@ class Grafo {
         this.banheiroa = new Vertice("Banheiro do bloco A", 16, 42);
         this.sba = new Vertice("Saida bloco A", 8, 44);
         this.almoxarifado = new Vertice("Almoxarifado", 37, 10);
-        this.rampae = new Vertice("Rampa esquerda", 25, 0);
+        this.rampae = new Vertice("Rampa esquerda", 40, 22);
         this.estacionamento1 = new Vertice("Estacionamento aberto direito", 47, 64);
         this.estacionamento2 = new Vertice("Estacionamento aberto esquerdo", 47, 39);
         this.estacionamento3 = new Vertice("Estacionamento coberto", 57, 31);
@@ -309,6 +309,14 @@ class Grafo {
         // falta fazer por dentro
         this.saida1.adicionaAdjacente(new Adjacente(this.galpao, 40));
         this.saida1.adicionaAdjacente(new Adjacente(this.almoxarifado, 30));
+
+        // adjacentes da saida do bloco A
+        this.sba.adicionaAdjacente(new Adjacente(this.escadaentre, 8));
+
+        // adjacentes saida do bloco M
+        this.sbm.adicionaAdjacente(new Adjacente(this.morro2, 5));
+
+
 
 
     }
