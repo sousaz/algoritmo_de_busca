@@ -87,7 +87,7 @@ class Grafo {
         this.banheiroa = new Vertice("Banheiro do bloco A", 16, 42);
         this.sba = new Vertice("Saida bloco A", 8, 44);
         this.almoxarifado = new Vertice("Almoxarifado", 37, 10);
-        this.rampa1 = new Vertice("Rampa 1", 25, 0);
+        this.rampae = new Vertice("Rampa esquerda", 25, 0);
         this.estacionamento1 = new Vertice("Estacionamento aberto direito", 47, 64);
         this.estacionamento2 = new Vertice("Estacionamento aberto esquerdo", 47, 39);
         this.estacionamento3 = new Vertice("Estacionamento coberto", 57, 31);
@@ -170,6 +170,146 @@ class Grafo {
         this.banheiroc = new Vertice("Banheiro do bloco C", 29, 27);
         this.entradaprincipal = new Vertice("Entrada principal", 28, 39);
         this.saidaprincipal = new Vertice("Saida principal", 24, 38);
+        this.escadaentre = new Vertice("Escada entre blocos", 7, 48);
+
+        // adajcentes do galpão
+        this.galpao.adicionaAdjacente(new Adjacente(this.blocoh, 96));
+        this.galpao.adicionaAdjacente(new Adjacente(this.saidae, 86));
+        this.galpao.adicionaAdjacente(new Adjacente(this.saida1, 40));
+        this.galpao.adicionaAdjacente(new Adjacente(this.almoxarifado, 50));
+
+        // adjacentes do almoxarifado
+        this.almoxarifado.adicionaAdjacente(new Adjacente(this.galpao, 50));
+        this.almoxarifado.adicionaAdjacente(new Adjacente(this.saida1, 30));
+        this.almoxarifado.adicionaAdjacente(new Adjacente(this.estacionamento3, 50));
+
+        // adjacentes da saida emergencia bloco f
+        // falta fazer por dentro
+        this.saida1.adicionaAdjacente(new Adjacente(this.galpao, 40));
+        this.saida1.adicionaAdjacente(new Adjacente(this.almoxarifado, 30));
+
+        // adjacentes do estacionamento coberto
+        this.estacionamento3.adicionaAdjacente(new Adjacente(this.almoxarifado, 50));
+        this.estacionamento3.adicionaAdjacente(new Adjacente(this.estacionamento2, 5));
+        this.estacionamento3.adicionaAdjacente(new Adjacente(this.rampae, 20));
+
+        // adjacentes do estacionamento aberto esquerdo
+        this.estacionamento2.adicionaAdjacente(new Adjacente(this.estacionamento3, 5));
+        this.estacionamento2.adicionaAdjacente(new Adjacente(this.rampae, 15));
+        this.estacionamento2.adicionaAdjacente(new Adjacente(this.estacionamento1, 40));
+        this.estacionamento2.adicionaAdjacente(new Adjacente(this.administracao, 30));
+
+        // adjacentes do estacionamento aberto direito
+        this.estacionamento1.adicionaAdjacente(new Adjacente(this.estacionamento2, 40));
+        this.estacionamento1.adicionaAdjacente(new Adjacente(this.administracao, 15));
+        this.estacionamento1.adicionaAdjacente(new Adjacente(this.guarita, 10));
+
+        // adjacentes da guarita
+        this.guarita.adicionaAdjacente(new Adjacente(this.estacionamento1, 10));
+        this.guarita.adicionaAdjacente(new Adjacente(this.morro2, 65));
+
+        // adjacentes da administracao
+        this.administracao.adicionaAdjacente(new Adjacente(this.estacionamento2, 30));
+        this.administracao.adicionaAdjacente(new Adjacente(this.estacionamento1, 15));
+        this.administracao.adicionaAdjacente(new Adjacente(this.pedagogico, 50));
+        this.administracao.adicionaAdjacente(new Adjacente(this.entradaprincipal, 34));
+
+        // adjacentes do pedagogico
+        //falta a parte de dentro
+        this.pedagogico.adicionaAdjacente(new Adjacente(this.administracao, 50));
+        this.pedagogico.adicionaAdjacente(new Adjacente(this.entradaprincipal, 42));
+        this.pedagogico.adicionaAdjacente(new Adjacente(this.escadaentre, 13));
+        this.pedagogico.adicionaAdjacente(new Adjacente(this.morro2, 11));
+
+        // adjacentes do morro direita
+        this.morro2.adicionaAdjacente(new Adjacente(this.pedagogico, 11));
+        this.morro2.adicionaAdjacente(new Adjacente(this.guarita, 65));
+        this.morro2.adicionaAdjacente(new Adjacente(this.copa, 11));
+        this.morro2.adicionaAdjacente(new Adjacente(this.sbm, 5));
+        this.morro2.adicionaAdjacente(new Adjacente(this.biblioteca, 30));
+        this.morro2.adicionaAdjacente(new Adjacente(this.refeitorio, 93));
+
+        // adjacentes da copa
+        this.copa.adicionaAdjacente(new Adjacente(this.morro2, 11));
+
+        // adjacentes do refetorio
+        this.refeitorio.adicionaAdjacente(new Adjacente(this.morro2, 93));
+        this.refeitorio.adicionaAdjacente(new Adjacente(this.academia, 42));
+
+        // adjacentes da academia
+        this.academia.adicionaAdjacente(new Adjacente(this.refeitorio, 42));
+        this.academia.adicionaAdjacente(new Adjacente(this.ginasio, 7));
+
+        // adjacentes do ginasio
+        this.ginasio.adicionaAdjacente(new Adjacente(this.academia, 7));
+
+        // adjacentes da biblioteca
+        //falta parte de dentro
+        this.biblioteca.adicionaAdjacente(new Adjacente(this.morro2, 30));
+        this.biblioteca.adicionaAdjacente(new Adjacente(this.escadaentre, 10));
+        this.biblioteca.adicionaAdjacente(new Adjacente(this.b03s, 12));
+
+        // adjacentes da escada entre blocos
+        this.escadaentre.adicionaAdjacente(new Adjacente(this.biblioteca, 10));
+        this.escadaentre.adicionaAdjacente(new Adjacente(this.pedagogico, 13));
+        this.escadaentre.adicionaAdjacente(new Adjacente(this.sbc, 8));
+        this.escadaentre.adicionaAdjacente(new Adjacente(this.b03s, 20));
+
+        // adjacentes da saida do mini auditorio
+        //falta fazer por dentro
+        this.b03s.adicionaAdjacente(new Adjacente(this.biblioteca, 12));
+        this.b03s.adicionaAdjacente(new Adjacente(this.escadaentre, 20));
+        this.b03s.adicionaAdjacente(new Adjacente(this.auditorio, 12));
+
+        // adjacentes do auditorio
+        this.auditorio.adicionaAdjacente(new Adjacente(this.b03s, 12));
+        this.auditorio.adicionaAdjacente(new Adjacente(this.morro1, 12));
+
+        // adjacentes do morro esquerda
+        this.morro1.adicionaAdjacente(new Adjacente(this.auditorio, 12));
+        this.morro1.adicionaAdjacente(new Adjacente(this.blocoh, 5));
+
+        // adjacentes do bloco H
+        // falta fazer por dentro
+        this.blocoh.adicionaAdjacente(new Adjacente(this.morro1, 5));
+        this.blocoh.adicionaAdjacente(new Adjacente(this.galpao, 96));
+        this.blocoh.adicionaAdjacente(new Adjacente(this.saidae, 10));
+        this.blocoh.adicionaAdjacente(new Adjacente(this.saidaprincipal, 45));
+
+        // adjacentes da saida principal
+        this.saidaprincipal.adicionaAdjacente(new Adjacente(this.blocoh, 45));
+        this.saidaprincipal.adicionaAdjacente(new Adjacente(this.entradaprincipal, 24));
+        this.saidaprincipal.adicionaAdjacente(new Adjacente(this.saidae, 56));
+
+        // adjacentes da entrada principal
+        this.entradaprincipal.adicionaAdjacente(new Adjacente(this.saidaprincipal, 24));
+        this.entradaprincipal.adicionaAdjacente(new Adjacente(this.administracao, 34));
+        this.entradaprincipal.adicionaAdjacente(new Adjacente(this.pedagogico, 42));
+        this.entradaprincipal.adicionaAdjacente(new Adjacente(this.rampae, 30));
+
+        // adjacentes da rampa esquerda
+        this.rampae.adicionaAdjacente(new Adjacente(this.estacionamento3, 20));
+        this.rampae.adicionaAdjacente(new Adjacente(this.estacionamento2, 15));
+        this.rampae.adicionaAdjacente(new Adjacente(this.entradaprincipal, 30));
+        this.rampae.adicionaAdjacente(new Adjacente(this.entradae, 20));
+
+        // adjacentes da entrada bloco E
+        // falta fazer por dentro
+        this.entradae.adicionaAdjacente(new Adjacente(this.rampae, 20));
+        this.entradae.adicionaAdjacente(new Adjacente(this.saidae, 18));
+
+        // adjacentes da saida bloco E
+        // falta fazer por dentro
+        this.saidae.adicionaAdjacente(new Adjacente(this.entradae, 18));
+        this.saidae.adicionaAdjacente(new Adjacente(this.galpao, 86));
+        this.saidae.adicionaAdjacente(new Adjacente(this.saidaprincipal, 56));
+        this.saidae.adicionaAdjacente(new Adjacente(this.blocoh, 10));
+
+        // adjacentes da saida de emergencia bloco F
+        // falta fazer por dentro
+        this.saida1.adicionaAdjacente(new Adjacente(this.galpao, 40));
+        this.saida1.adicionaAdjacente(new Adjacente(this.almoxarifado, 30));
+
 
     }
 
@@ -265,8 +405,8 @@ class AEstrela {
 
 const grafo = new Grafo();
 
-const aEstrela = new AEstrela(grafo.e08);
-const res = aEstrela.buscar(grafo.f09);
+const aEstrela = new AEstrela(grafo.entradaprincipal);
+const res = aEstrela.buscar(grafo.guarita);
 
 // console.log(res)
 res.caminho.forEach((caminho) => {
