@@ -714,3 +714,9 @@ const res = aEstrela.buscar(grafo.f01);
 
 console.log(res)
 
+function teste(){
+    return 12
+}
+
+export default { teste }
+

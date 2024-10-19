@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph with D3.js</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .node {
+      fill: #69b3a2;
+      stroke: #404040;
+      stroke-width: 2px;
+    }
+    .link {
+      stroke: #0e0d0d;
+      stroke-opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Graph Navigation</h1>
+  
+  <label for="source">Select Origin: </label>
+  <select id="source"></select>
+
+  <label for="target">Select Destination: </label>
+  <select id="target"></select>
+
+  <button id="findPath">Find Path</button>
+
+  <svg width="800" height="600"></svg>
+
+  <script>
+    class Vertice {
+      constructor(nome, lat, lon) {
+        this.nome = nome;
+        this.lat = lat;
+        this.lon = lon;
+      }
+    }
+  
+    class Grafo {
+      constructor() {
+        this.vertices = [];
+        this.arestas = [];
+      }
+  
+      adicionarVertice(vertice) {
+        this.vertices.push(vertice);
+      }
+  
+      adicionarAresta(origem, destino) {
+        this.arestas.push({ origem, destino });
+      }
+  
+      encontrarCaminho(origem, destino) {
+        // Algoritmo simples de busca de caminho (exemplo)
+        const caminho = [origem, destino]; // Aqui pode ser um algoritmo como Dijkstra para o caminho real
+        return caminho;
+      }
+    }
+  
+    // Criando o grafo
+    const grafo = new Grafo();
+    grafo.adicionarVertice(new Vertice("Galpão", -27.02590280477437, -51.14375765250265));
+    grafo.adicionarVertice(new Vertice("Almoxarifado", -27.026084291753943, -51.14445217070017));
+    grafo.adicionarVertice(new Vertice("Estacionamento coberto", -27.026145606376335, -51.14511264457188));
+  
+    // Exemplo de arestas
+    grafo.adicionarAresta("Galpão", "Almoxarifado");
+    grafo.adicionarAresta("Almoxarifado", "Estacionamento coberto");
+  
+    // Definindo os nós e arestas para D3.js
+    const nodes = grafo.vertices.map(v => ({ id: v.nome }));
+    const links = grafo.arestas.map(a => ({
+      source: a.origem,
+      target: a.destino
+    }));
+  
+    // Criando o SVG e as forças do layout
+    const svg = d3.select("svg"),
+          width = +svg.attr("width"),
+          height = +svg.attr("height");
+  
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+        .force("charge", d3.forceManyBody().strength(-200))
+        .force("center", d3.forceCenter(width / 2, height / 2));
+  
+    const link = svg.append("g")
+        .attr("class", "links")
+      .selectAll("line")
+      .data(links)
+      .enter().append("line")
+        .attr("class", "link");
+  
+    const node = svg.append("g")
+        .attr("class", "nodes")
+      .selectAll("circle")
+      .data(nodes)
+      .enter().append("circle")
+        .attr("class", "node")
+        .attr("r", 10)
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+  
+    node.append("title")
+        .text(d => d.id);
+  
+    simulation.on("tick", () => {
+      link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+  
+      node
+          .attr("cx", d => d.x)
+          .attr("cy", d => d.y);
+    });
+  
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+  
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+  
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+  
+    // Preencher os selects com as opções de vértices
+    const sourceSelect = d3.select("#source");
+    const targetSelect = d3.select("#target");
+  
+    nodes.forEach(node => {
+      sourceSelect.append("option").text(node.id).attr("value", node.id);
+      targetSelect.append("option").text(node.id).attr("value", node.id);
+    });
+  
+    // Encontrar caminho e destacar
+    d3.select("#findPath").on("click", () => {
+      const origem = sourceSelect.node().value;
+      const destino = targetSelect.node().value;
+      const caminho = grafo.encontrarCaminho(origem, destino);
+  
+      // Destacar o caminho
+      link.style("stroke", d => {
+        return caminho.includes(d.source.id) && caminho.includes(d.target.id) ? "red" : "#999";
+      });
+    });
+  </script>
+  
+</body>
+</html>
