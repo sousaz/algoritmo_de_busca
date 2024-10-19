@@ -2,7 +2,7 @@
 
 ## Introdução
 
-O projeto realizado pode ser acessado [aqui](https://sousaz.github.io/algoritmo_de_busca/))
+O projeto realizado pode ser acessado [aqui](https://sousaz.github.io/algoritmo_de_busca/)
 
 Foi construido 3 algoritmos de busca sendo eles:
 
