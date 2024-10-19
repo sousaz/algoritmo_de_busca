@@ -16,3 +16,9 @@ text {
     font-size: 12px;
     fill: black;
 }
+
+p {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: blue;
+}

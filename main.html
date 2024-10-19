@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>	
+</head>
+<body>
+    <main class="container mx-auto flex flex-col items-center h-screen">
+        <div class="flex flex-col items-center">
+            <img class="w-[1420px] h-[500px]" src="grafo.png" alt="">
+            <p class="text-2xl">Também existe a possibilidade de escolher as salas</p>
+        </div>
+        <div class="container mx-auto p-8 bg-[#eaeaea] w-fit rounded-lg mb-4">
+            <label class="text-xl" for="origem">Origem:</label>
+            <select class="p-2 rounded-lg" name="origem" id="origem">
+            </select>
+            <label class="text-xl" for="destino">Destino:</label>
+            <select class="p-2 rounded-lg" name="destino" id="destino">
+            </select>
+            <label class="text-xl" for="algoritmo">Selecione um Algortimo:</label>
+            <select class="p-2 rounded-lg" name="algoritmo" id="algoritmo">
+                <option selected value="g">Busca Gulosa</option>
+                <option value="a">Busca A Estrela</option>
+                <option value="d">Busca Dijkstra</option>
+            </select>
+            <Button class="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-500 focus:outline-none transition-colors" id="buscar">Buscar</Button>
+        </div>
+        <h1 class="text-2xl">Caminho:</h1>
+        <div class="max-w-fit bg-[#eaeaea] p-4 rounded-lg flex flex-col justify-center items-center">
+            <div class="text-xl" id="caminho"></div>
+            <div class="text-xl flex" id="custo"></div>
+        </div>
+    </main>
+</body>
+<script type="module" src="main.js"></script>
+</html>

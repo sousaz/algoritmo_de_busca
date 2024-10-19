@@ -1,6 +1,6 @@
 class Vertice {
-    constructor(rotulo) {
-        this.rotulo = rotulo;
+    constructor(nome) {
+        this.nome = nome;
         this.visitado = false;
         this.adjacentes = [];
     }
@@ -11,7 +11,7 @@ class Vertice {
 
     mostraAdjacentes() {
         for (let i in this.adjacentes) {
-            console.log(this.adjacentes[i].vertice.rotulo, this.adjacentes[i].custo);
+            console.log(this.adjacentes[i].vertice.nome, this.adjacentes[i].custo);
         }
     }
 }
@@ -694,7 +694,7 @@ class Dijkstra {
             visitados.add(vertice)
 
             if(vertice === fim){
-                return {caminho: this.caminho(predecesoores, fim), custo}
+                return {totalCaminho: this.caminho(predecesoores, fim), totalCusto: custo}
             } 
 
             for(const adjcente of vertice.adjacentes){
@@ -717,14 +717,16 @@ class Dijkstra {
         let caminho = []
         let atual = fim
         while(atual){
-            caminho.push(atual.rotulo)
+            caminho.push(atual)
             atual = predecesoores.get(atual)
         }
-        return caminho.reverse().join(' - ')
+        return caminho.reverse()
     }
 }
+
 
 const grafo = new Grafo()
 
 const dijkstra = new Dijkstra(grafo)
-console.log(dijkstra.buscar(grafo.academia, grafo.auditorio))
+
+export default dijkstra;

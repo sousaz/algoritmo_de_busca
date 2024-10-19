@@ -656,9 +656,11 @@ function reconstruirCaminho(caminho, atual, custoReal) {
 }
 
 let grafo = new Grafo();
-let inicio = grafo.estacioamentocoberto;
-let objetivo = grafo.auditorio;
+// let inicio = grafo.sbf;
+// let objetivo = grafo.guarita;
 
-let caminho = buscaGulosa(inicio, objetivo);
-console.log("Caminho encontrado:", caminho.totalCaminho.map(v => v.nome).join(" -> "));
-console.log("Custo total:", caminho.totalCusto);
+// let caminho = buscaGulosa(inicio, objetivo);
+// console.log("Caminho encontrado:", caminho.totalCaminho.map(v => v.nome).join(" -> "));
+// console.log("Custo total:", caminho.totalCusto);
+
+export default buscaGulosa;

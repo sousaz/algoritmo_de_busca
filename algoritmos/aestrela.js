@@ -60,7 +60,7 @@ class Grafo {
         this.h08 = new Vertice("H08", -27.026639127110045, -51.144086034960864);
         this.h09 = new Vertice("H09", -27.026581684445002, -51.14402344689122);
         this.h10 = new Vertice("H10", -27.026639127110045, -51.144086034960864);
-        this.blocoe = new Vertice("Bloco E", -27.026200890388267, -51.14444872963042);
+        this.blocoe = new Vertice("Bloco E", -27.026200890388267, -51.14444872963042, 9, 9);
         this.e01 = new Vertice("E01", -27.02621406051128, -51.14455670155904);
         this.e02 = new Vertice("E02", -27.02613581063681, -51.14449232854308);
         this.e03 = new Vertice("E03", -27.026082648477242, -51.14442460276588);
@@ -70,7 +70,7 @@ class Grafo {
         this.e07 = new Vertice("E07", -27.026233174978433, -51.14436157085465);
         this.e08 = new Vertice("E08", -27.026291713006863, -51.144423932213854);
         this.banheiroe = new Vertice("Banheiro do bloco E", -27.026368170793955, -51.144491657991054);
-        this.blococ = new Vertice("Bloco C", -27.02649481088289, -51.14474372856489);
+        this.blococ = new Vertice("Bloco C", -27.02649481088289, -51.14474372856489, 10, 9);
         this.c01 = new Vertice("C01 - reprografia", -27.02653901296748, -51.14491740159752);
         this.c02 = new Vertice("C02 - cozinha", -27.02650138146413, -51.1448671101788);
         this.c03 = new Vertice("C03", -27.026445830174247, -51.14482486538708);
@@ -81,7 +81,7 @@ class Grafo {
         this.c08 = new Vertice("C08", -27.026561114003254, -51.144684719966925);
         this.banheiroc = new Vertice("Banheiro do bloco C", -27.026612483961483, -51.14473635249014);
         this.c09 = new Vertice("C09 - onde pegava as chaves", -27.026672813766158, -51.14479200832685);
-        this.blocoa = new Vertice("Bloco A", -27.02680901085835, -51.14484144135482);
+        this.blocoa = new Vertice("Bloco A", -27.02680901085835, -51.14484144135482, 17, 9);
         this.a01 = new Vertice("A01", -27.026862229691307, -51.144653677145875);
         this.a02 = new Vertice("A02", -27.026868987636547, -51.14465178053771);
         this.a03 = new Vertice("A03", -27.02692558541194, -51.144574019602686);
@@ -91,7 +91,7 @@ class Grafo {
         this.a07 = new Vertice("A07", -27.026961909345307, -51.14483669983466);
         this.a08 = new Vertice("A08", -27.026903622102495, -51.144901184512484);
         this.banheiroa = new Vertice("Banheiro do bloco A", -27.026807321371177, -51.144729541472714);
-        this.blocob = new Vertice("Bloco B", -27.02680901085835, -51.14484144135482);
+        this.blocob = new Vertice("Bloco B", -27.02680901085835, -51.14484144135482, 17, 9);
         this.b01 = new Vertice("B01", -27.0269053115882, -51.14460910685413);
         this.b02 = new Vertice("B02", -27.026940790782554, -51.1445654848662);
         this.b03 = new Vertice("B03 - mini auditorio", -27.026999078006092, -51.1446176415909);
@@ -100,7 +100,7 @@ class Grafo {
         this.b06 = new Vertice("B06", -27.026952617178193, -51.144843337963266);
         this.b07 = new Vertice("B07", -27.026901087873853, -51.144908770945165);
         this.banheirob = new Vertice("Banheiro do bloco B", -27.02684280059946, -51.144694454221835);
-        this.blocod = new Vertice("Bloco D", -27.02649481088289, -51.14474372856489);
+        this.blocod = new Vertice("Bloco D", -27.02649481088289, -51.14474372856489, 10, 9);
         this.d01 = new Vertice("D01", -27.02653901296748, -51.14491740159752);
         this.d02 = new Vertice("D02", -27.02650138146413, -51.1448671101788);
         this.d03 = new Vertice("D03", -27.026445830174247, -51.14482486538708);
@@ -110,7 +110,7 @@ class Grafo {
         this.d07 = new Vertice("D07", -27.02650197878968, -51.14461766474197);
         this.d08 = new Vertice("D08", -27.026561114003254, -51.144684719966925);
         this.banheirod = new Vertice("Banheiro do bloco D", -27.026612483961483, -51.14473635249014);
-        this.blocof = new Vertice("Bloco F", -27.026310827456236, -51.144558713215794);
+        this.blocof = new Vertice("Bloco F", -27.026310827456236, -51.144558713215794, 9, 9);
         this.f01 = new Vertice("F01", -27.02621406051128, -51.14455670155904);
         this.f02 = new Vertice("F02", -27.02613581063681, -51.14449232854308);
         this.f03 = new Vertice("F03", -27.026082648477242, -51.14442460276588);
@@ -415,9 +415,9 @@ class Grafo {
         this.almoxarifado.adicionaAdjacente(new Adjacente(this.estacioamentocoberto, 68));
 
         // adjacentes da saida emergencia bloco f
-        // falta fazer por dentro
         this.sbf.adicionaAdjacente(new Adjacente(this.galpao, 59));
         this.sbf.adicionaAdjacente(new Adjacente(this.almoxarifado, 36));
+        this.sbf.adicionaAdjacente(new Adjacente(this.blocof, 40));
 
         // adjacentes do estacionamento coberto
         this.estacioamentocoberto.adicionaAdjacente(new Adjacente(this.almoxarifado, 68));
@@ -665,11 +665,11 @@ function reconstruirCaminho(caminho, atual, custoReal) {
 }
 
 let grafo = new Grafo();
-let inicio = grafo.estacioamentocoberto;
-let objetivo = grafo.auditorio;
+// let inicio = grafo.sbf;
+// let objetivo = grafo.guarita;
 
-let caminho = aEstrela(inicio, objetivo);
-console.log("Caminho encontrado:", caminho.totalCaminho.map(v => v.nome).join(" -> "));
-console.log("Custo total:", caminho.totalCusto);
+// let caminho = aEstrela(inicio, objetivo);
+// console.log("Caminho encontrado:", caminho.totalCaminho.map(v => v.nome).join(" -> "));
+// console.log("Custo total:", caminho.totalCusto);
 
 export default { aEstrela, grafo }
