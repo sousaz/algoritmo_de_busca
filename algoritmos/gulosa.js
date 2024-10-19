@@ -1,36 +1,21 @@
-class Vertice {
-    constructor(rotulo, x, y) {
-        this.rotulo = rotulo;
-        this.x = (x * 110_000);
-        this.y = (y * 110_000 * Math.cos(((x * 110_000) * (Math.PI / 180))));
-        this.visitado = false;
-        this.adjacentes = [];
-    }
 
-    adicionaAdjacente(adjacente) {
-        this.adjacentes.push(adjacente);
-    }
-
-    mostraAdjacentes() {
-        for (let i in this.adjacentes) {
-            console.log(this.adjacentes[i].vertice.rotulo, this.adjacentes[i].custo);
-        }
-    }
-
-    heuristica(objetivo) {
-        return Math.sqrt(Math.pow(this.x - objetivo.x, 2) + Math.pow(this.y - objetivo.y, 2));
+class Adjacente {
+    constructor(vertice, custo, x, y) {
+        this.vertice = vertice;
+        this.custo = custo;
     }
 }
 
-class Adjacente {
-    constructor(vertice, custo) {
-        this.vertice = vertice;
-        this.custo = custo;
-        this.distanciaAEstrela = 0;
+class Vertice {
+    constructor(nome, x, y) {
+        this.nome = nome;
+        this.adjacentes = [];
+        this.x = (x * 110_000);
+        this.y = (y * 110_000 * Math.cos(((x * 110_000) * (Math.PI / 180))));
     }
 
-    calcularDistanciaAEstrela(objetivo) {
-        this.distanciaAEstrela = this.custo + this.vertice.heuristica(objetivo);
+    adicionaAdjacente(adj) {
+        this.adjacentes.push(adj);
     }
 }
 
@@ -160,8 +145,6 @@ class Grafo {
         this.elevador.adicionaAdjacente(new Adjacente(this.entradaprincipal, 16));
         this.elevador.adicionaAdjacente(new Adjacente(this.saidaprincipal, 10));
         this.elevador.adicionaAdjacente(new Adjacente(this.blocob, 4));
-
-
 
         // adjacentes do bloco F
         this.blocof.adicionaAdjacente(new Adjacente(this.escadaesquerda, 2));
@@ -616,107 +599,66 @@ class Grafo {
 
 }
 
-class VetorOrdenado {
-    constructor(capacidade) {
-        this.capacidade = capacidade;
-        this.ultimaPosicao = -1;
-        this.valores = new Array(this.capacidade);
-    }
-
-    inserir(adjacente) {
-        if (this.ultimaPosicao === this.capacidade - 1) {
-            console.log("Capacidade máxima atingida");
-            return;
-        }
-        let posicao = 0;
-        for (let i = 0; i <= this.ultimaPosicao; i++) {
-            posicao = i;
-            if (this.valores[i].distanciaAEstrela > adjacente.distanciaAEstrela) break;
-
-            if (i === this.ultimaPosicao) posicao = i + 1;
-        }
-        let x = this.ultimaPosicao;
-        while (x >= posicao) {
-            this.valores[x + 1] = this.valores[x];
-            x--;
-        }
-        this.valores[posicao] = adjacente;
-        this.ultimaPosicao++;
-    }
-
-    imprimir(aEstrela) {
-        if (this.ultimaPosicao === -1) console.log("Vetor vazio");
-        else {
-            for (let i = 0; i <= this.ultimaPosicao; i++) {
-                console.log(
-                    " - ",
-                    this.valores[i].vertice.rotulo,
-                    " - ",
-                    this.valores[i].custo,
-                    " - ",
-                    this.valores[i].distanciaAEstrela
-                );
-            }
-
-            console.log("Custo total até o momento: ", aEstrela.custoTotal);
-        }
-    }
-
-    pegar() {
-        if (this.ultimaPosicao === -1) return null;
-        return this.valores;
-    }
+function heuristica(verticeAtual, objetivo) {
+    return Math.sqrt(Math.pow(verticeAtual.x - objetivo.x, 2) + Math.pow(verticeAtual.y - objetivo.y, 2));
 }
 
-class AEstrela {
-    constructor(objetivo) {
-        this.objetivo = objetivo;
-        this.encontrado = false;
-        this.custoTotal = 0;
-        this.caminho = [];
-    }
+function buscaGulosa(inicio, objetivo) {
+    let aberto = [inicio];
+    let fechado = [];
 
-    buscar(atual) {
-        console.log("atual: ", atual.rotulo);
-        atual.visitado = true;
-        this.caminho.push(atual.rotulo);
+    let custoEstimado = new Map(); 
+    custoEstimado.set(inicio, heuristica(inicio, objetivo));
 
-        if (atual === this.objetivo) {
-            this.encontrado = true;
-            return { caminho: this.caminho, custoTotal: this.custoTotal };
-        } else {
-            let vo = new VetorOrdenado(atual.adjacentes.length);
-            for (let i in atual.adjacentes) {
-                // console.log(atual.adjacentes[i].vertice);
-                if (atual.adjacentes[i].vertice.visitado === false) {
-                    const adj = atual.adjacentes[i];
-                    adj.vertice.visitado = true;
-                    adj.calcularDistanciaAEstrela(this.objetivo);
-                    vo.inserir(atual.adjacentes[i]);
-                }
-            }
-            vo.imprimir(this);
+    let custoReal = new Map();
+    custoReal.set(inicio, 0);
 
-            if (vo.valores[0] != null) {
-                // vo.valores[0].vertice.visitado = true;
-                this.custoTotal += vo.valores[0].custo;
-                return this.buscar(vo.valores[0].vertice);
-            }
+    let caminho = new Map();
+
+    while (aberto.length > 0) {
+        let atual = aberto.reduce((menor, vertice) =>
+            custoEstimado.get(vertice) < custoEstimado.get(menor) ? vertice : menor
+        );
+
+        if (atual === objetivo) {
+            return reconstruirCaminho(caminho, atual, custoReal);
         }
-        return null
+
+        aberto = aberto.filter(v => v !== atual);
+        fechado.push(atual);
+
+        for (let adj of atual.adjacentes) {
+            if (fechado.includes(adj.vertice)) continue;
+
+            let custoRealAcumulado = custoReal.get(atual) + adj.custo;
+
+            if (!aberto.includes(adj.vertice)) {
+                aberto.push(adj.vertice);
+            }
+
+            caminho.set(adj.vertice, atual);
+            custoReal.set(adj.vertice, custoRealAcumulado);
+            custoEstimado.set(adj.vertice, heuristica(adj.vertice, objetivo));
+        }
     }
+
+    return [];
 }
 
-const grafo = new Grafo();
-
-const aEstrela = new AEstrela(grafo.d04);
-const res = aEstrela.buscar(grafo.f01);
-
-console.log(res)
-
-function teste(){
-    return 12
+function reconstruirCaminho(caminho, atual, custoReal) {
+    let totalCaminho = [atual];
+    let totalCusto = custoReal.get(atual);
+    while (caminho.has(atual)) {
+        atual = caminho.get(atual);
+        totalCaminho.unshift(atual);
+    }
+    return { totalCaminho, totalCusto };
 }
 
-export default { teste }
+let grafo = new Grafo();
+let inicio = grafo.estacioamentocoberto;
+let objetivo = grafo.auditorio;
 
+let caminho = buscaGulosa(inicio, objetivo);
+console.log("Caminho encontrado:", caminho.totalCaminho.map(v => v.nome).join(" -> "));
+console.log("Custo total:", caminho.totalCusto);
