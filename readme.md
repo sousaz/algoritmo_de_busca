@@ -2,7 +2,7 @@
 
 ## Introdução
 
-O projeto realizado pode ser acessado [aqui](link)
+O projeto realizado pode ser acessado [aqui](https://sousaz.github.io/algoritmo_de_busca/))
 
 Foi construido 3 algoritmos de busca sendo eles:
 
@@ -18,6 +18,8 @@ return Math.sqrt(Math.pow(verticeAtual.x - objetivo.x, 2) + Math.pow(verticeAtua
 ```
 
 Como escolha para o x e y, utilizamos o [Google Maps](https://www.google.com.br/maps/preview), para reocolhermos dados das coordernadas.
+
+As coordenadas não são 100% precisas, podendo gerar resultados errôneos
 
 Como coordenadas são medidas em graus e estavamos usando o custo em metros, também foi utilizado uma formula de aproximação de graus para metros, sendo ela:
 
