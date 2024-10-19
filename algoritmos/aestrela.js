@@ -1,16 +1,18 @@
 class Adjacente {
-    constructor(vertice, custo, x, y) {
+    constructor(vertice, custo) {
         this.vertice = vertice;
         this.custo = custo;
     }
 }
 
 class Vertice {
-    constructor(nome, x, y) {
+    constructor(nome, x, y, xx, yy) {
         this.nome = nome;
         this.adjacentes = [];
         this.x = (x * 110_000);
         this.y = (y * 110_000 * Math.cos(((x * 110_000) * (Math.PI / 180))));
+        this.xx = xx;
+        this.yy = yy;
     }
 
     adicionaAdjacente(adj) {
@@ -20,33 +22,33 @@ class Vertice {
 
 class Grafo {
     constructor() {
-        this.galpao = new Vertice("Galpão", -27.02590280477437, -51.14375765250265);
-        this.sbf = new Vertice("Saida de emergencia do bloco F", -27.026029956919142, -51.14421776701581);
-        this.almoxarifado = new Vertice("Almoxarifado", -27.026084291753943, -51.14445217070017);
-        this.estacioamentocoberto = new Vertice("Estacionamento coberto", -27.026145606376335, -51.14511264457188);
-        this.estacionamentoesquerda = new Vertice("Estacionamento parte esquerda", -27.02626985041974, -51.145181040909726);
-        this.estacionamentodireita = new Vertice("Estacionamento parte direita", -27.026637803114337, -51.14560617103235);
-        this.guarita = new Vertice("Guarita", -27.026564, -51.145827);
-        this.administracao = new Vertice("Administracao", -27.026616295257014, -51.145333626448696);
-        this.rampae = new Vertice("Rampa esquerda", -27.026340334957855, -51.14501742616217);
-        this.entradae = new Vertice("Entrada bloco E", -27.02627821299441, -51.144664715681884);
-        this.pedagogico = new Vertice("Pedagogico", -27.02700555458725, -51.14496477139793);
-        this.morro1 = new Vertice("Morro direita", -27.027155870877557, -51.145131983547394);
-        this.copa = new Vertice("Copa", -27.027304557972506, -51.1451148639717);
-        this.refeitorio = new Vertice("Refeitorio", -27.02815219775592, -51.14560562515259);
-        this.entradaprincipal = new Vertice("Entrada principal", -27.026753929487572, -51.144971904554474);
-        this.biblioteca = new Vertice("Biblioteca", -27.02728265474534, -51.144695565939344);
-        this.sbm = new Vertice("Saida do bloco M", -27.027231542436404, -51.14496713473651);
-        this.escadaentre = new Vertice("Escada entre blocos", -27.027164291010124, -51.14462420439472);
-        this.sb03 = new Vertice("Saida mini auditorio 03", -27.027067065689327, -51.144514538657226);
-        this.auditorio = new Vertice("Auditorio", -27.026940354371916, -51.144190218662686);
-        this.morro2 = new Vertice("Morro esquerda", -27.026729168520205, -51.14415133818872);
-        this.blocoh = new Vertice("Bloco H", -27.026556001821813, -51.144173626784834);
-        this.sbe = new Vertice("Saida bloco E", -27.026426008891647, -51.14450535579341);
-        this.saidaprincipal = new Vertice("Saida principal", -27.02672861514435, -51.14473102721073);
-        this.academia = new Vertice("Academia", -27.02800836138837, -51.14631058951586);
-        this.sba = new Vertice("Saida bloco A", -27.027094081204723, -51.14451275165327);
-        this.ginasio = new Vertice("Ginasio", -27.027954815487057, -51.14651783775598);
+        this.galpao = new Vertice("Galpão", -27.02590280477437, -51.14375765250265, 1, 10);
+        this.blocoh = new Vertice("Bloco H", -27.026556001821813, -51.144173626784834, 6, 5);
+        this.morro2 = new Vertice("Morro esquerda", -27.026729168520205, -51.14415133818872, 9, 5);
+        this.sbe = new Vertice("Saida bloco E", -27.026426008891647, -51.14450535579341, 8, 8);
+        this.sbf = new Vertice("Saida de emergencia do bloco F", -27.026029956919142, -51.14421776701581, 5, 10);
+        this.entradae = new Vertice("Entrada bloco E", -27.02627821299441, -51.144664715681884, 8, 11);
+        this.rampae = new Vertice("Rampa esquerda", -27.026340334957855, -51.14501742616217, 10, 15);
+        this.almoxarifado = new Vertice("Almoxarifado", -27.026084291753943, -51.14445217070017, 4, 13);
+        this.saidaprincipal = new Vertice("Saida principal", -27.02672861514435, -51.14473102721073, 12, 8);
+        this.estacioamentocoberto = new Vertice("Estacionamento coberto", -27.026145606376335, -51.14511264457188, 10, 17);
+        this.estacionamentoesquerda = new Vertice("Estacionamento parte esquerda", -27.02626985041974, -51.145181040909726, 13, 15);
+        this.estacionamentodireita = new Vertice("Estacionamento parte direita", -27.026637803114337, -51.14560617103235, 18, 15);
+        this.administracao = new Vertice("Administracao", -27.026616295257014, -51.145333626448696, 16, 14);
+        this.guarita = new Vertice("Guarita", -27.026564, -51.145827, 25, 15);
+        this.entradaprincipal = new Vertice("Entrada principal", -27.026753929487572, -51.144971904554474, 12, 11);
+        this.pedagogico = new Vertice("Pedagogico", -27.02700555458725, -51.14496477139793, 19, 11);
+        this.sba = new Vertice("Saida bloco A", -27.027094081204723, -51.14451275165327, 17, 7);
+        this.auditorio = new Vertice("Auditorio", -27.026940354371916, -51.144190218662686, 14,5);
+        this.sb03 = new Vertice("Saida mini auditorio 03", -27.027067065689327, -51.144514538657226, 17, 5);
+        this.escadaentre = new Vertice("Escada entre blocos", -27.027164291010124, -51.14462420439472, 19, 7);
+        this.biblioteca = new Vertice("Biblioteca", -27.02728265474534, -51.144695565939344, 21, 5);
+        // this.sbm = new Vertice("Saida do bloco M", -27.027231542436404, -51.14496713473651, 21, 7);
+        this.morro1 = new Vertice("Morro direita", -27.027155870877557, -51.145131983547394, 25, 5);
+        this.refeitorio = new Vertice("Refeitorio", -27.02815219775592, -51.14560562515259, 36, 5);
+        this.academia = new Vertice("Academia", -27.02800836138837, -51.14631058951586, 42, 5);
+        this.ginasio = new Vertice("Ginasio", -27.027954815487057, -51.14651783775598, 45, 5);
+        this.copa = new Vertice("Copa", -27.027304557972506, -51.1451148639717, 26, 8);
         this.h01 = new Vertice("H01", -27.02649045191663, -51.144287075427);
         this.h02 = new Vertice("H02", -27.02644483562465, -51.14424155683089);
         this.h03 = new Vertice("H03", -27.026405977287236, -51.14419603823478);
@@ -456,10 +458,10 @@ class Grafo {
         this.morro1.adicionaAdjacente(new Adjacente(this.copa, 14));
         this.morro1.adicionaAdjacente(new Adjacente(this.biblioteca, 77));
         this.morro1.adicionaAdjacente(new Adjacente(this.refeitorio, 158));
-        this.morro1.adicionaAdjacente(new Adjacente(this.sbm, 16));
+        // this.morro1.adicionaAdjacente(new Adjacente(this.sbm, 16));
 
         // adjacentes saida do bloco M
-        this.sbm.adicionaAdjacente(new Adjacente(this.morro1, 16));
+        // this.sbm.adicionaAdjacente(new Adjacente(this.morro1, 16));
 
         // adjacentes da escada entre blocos
         this.escadaentre.adicionaAdjacente(new Adjacente(this.pedagogico, 42));
@@ -669,3 +671,5 @@ let objetivo = grafo.auditorio;
 let caminho = aEstrela(inicio, objetivo);
 console.log("Caminho encontrado:", caminho.totalCaminho.map(v => v.nome).join(" -> "));
 console.log("Custo total:", caminho.totalCusto);
+
+export default { aEstrela, grafo }

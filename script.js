@@ -1,31 +1,32 @@
 import grafo from './algoritmos/aestrela.js';
-import aestrela from './algoritmos/aestrela.js';
+import aEstrela from './algoritmos/aestrela.js';
 
 // Definindo os dados do grafo
 const nodes = [
 ];
 
 const links = [
-    { source: "Galpão", target: "Saida de emergencia do bloco F" },
-    { source: "Galpão", target: "Bloco H" },
-    { source: "Galpão", target: "Almoxarifado" },
+    // { source: "Galpão", target: "Saida de emergencia do bloco F" },
+    // { source: "Galpão", target: "Bloco H" },
+    // { source: "Galpão", target: "Almoxarifado" },
 ];
 
 const loadNodes = async () => {Object.keys(grafo.grafo).forEach(chave => {
     const vertice = grafo.grafo[chave];
     if(vertice.xx && vertice.yy)
-        nodes.push({ id: vertice.nome, x: vertice.xx, y: vertice.yy });
+        nodes.push({ id: vertice.nome, label: "chama", x: vertice.xx, y: vertice.yy });
 })}
 
 const loadLinks = async () => {Object.keys(grafo.grafo).forEach(chave => {
     const vertice = grafo.grafo[chave];
     vertice.adjacentes.forEach(adjacente => {
-        links.push({ source: vertice.nome, target: adjacente.vertice.nome });
+        if(adjacente.vertice.xx && adjacente.vertice.yy && vertice.xx && vertice.yy)
+            links.push({ source: vertice.nome, target: adjacente.vertice.nome });
     });
 })}
 
 await loadNodes();
-// await loadLinks();
+await loadLinks();
 
 // Dimensões do SVG
 const width = window.innerWidth;
@@ -40,7 +41,7 @@ let selectedNodes = []; // Array para armazenar a origem e o destino selecionado
 
 // Simulação de força (para layout de grafo)
 const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.id).distance(150))
+    .force("link", d3.forceLink(links).id(d => d.id).distance(80))
     .force("charge", d3.forceManyBody().strength(-100))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
@@ -131,77 +132,80 @@ function handleNodeClick(event, d) {
 }
 
 // Função heurística para o A*
-function heuristic(nodeA, nodeB) {
-    const dx = nodeA.x - nodeB.x;
-    const dy = nodeA.y - nodeB.y;
-    return Math.sqrt(dx * dx + dy * dy);  // Distância euclidiana
-}
+// function heuristic(nodeA, nodeB) {
+//     const dx = nodeA.x - nodeB.x;
+//     const dy = nodeA.y - nodeB.y;
+//     return Math.sqrt(dx * dx + dy * dy);  // Distância euclidiana
+// }
 
-// Função para encontrar o caminho mais curto usando A*
-function aStar(origin, destination) {
-    const openSet = [origin];  // Nós a serem avaliados
-    const cameFrom = new Map();  // Para reconstruir o caminho
+// // Função para encontrar o caminho mais curto usando A*
+// function aStar(origin, destination) {
+//     const openSet = [origin];  // Nós a serem avaliados
+//     const cameFrom = new Map();  // Para reconstruir o caminho
 
-    const gScore = new Map(nodes.map(n => [n.id, Infinity]));  // Distância do nó inicial
-    gScore.set(origin.id, 0);
+//     const gScore = new Map(nodes.map(n => [n.id, Infinity]));  // Distância do nó inicial
+//     gScore.set(origin.id, 0);
 
-    const fScore = new Map(nodes.map(n => [n.id, Infinity]));  // Estimativa de custo total
-    fScore.set(origin.id, heuristic(origin, destination));
+//     const fScore = new Map(nodes.map(n => [n.id, Infinity]));  // Estimativa de custo total
+//     fScore.set(origin.id, heuristic(origin, destination));
 
-    while (openSet.length > 0) {
-        // Encontre o nó com menor fScore
-        let current = openSet.reduce((a, b) => (fScore.get(a.id) < fScore.get(b.id) ? a : b));
+//     while (openSet.length > 0) {
+//         // Encontre o nó com menor fScore
+//         let current = openSet.reduce((a, b) => (fScore.get(a.id) < fScore.get(b.id) ? a : b));
 
-        // Se chegamos ao destino, reconstruir o caminho
-        if (current.id === destination.id) {
-            let totalPath = [current];
-            while (cameFrom.has(current.id)) {
-                current = cameFrom.get(current.id);
-                totalPath.unshift(current);
-            }
-            return totalPath;
-        }
+//         // Se chegamos ao destino, reconstruir o caminho
+//         if (current.id === destination.id) {
+//             let totalPath = [current];
+//             while (cameFrom.has(current.id)) {
+//                 current = cameFrom.get(current.id);
+//                 totalPath.unshift(current);
+//             }
+//             return totalPath;
+//         }
 
-        // Remover o nó atual do openSet
-        openSet.splice(openSet.indexOf(current), 1);
+//         // Remover o nó atual do openSet
+//         openSet.splice(openSet.indexOf(current), 1);
 
-        // Avaliar os vizinhos
-        links.forEach(link => {
-            let neighbor = null;
-            if (link.source.id === current.id) {
-                neighbor = link.target;
-            } else if (link.target.id === current.id) {
-                neighbor = link.source;
-            }
+//         // Avaliar os vizinhos
+//         links.forEach(link => {
+//             let neighbor = null;
+//             if (link.source.id === current.id) {
+//                 neighbor = link.target;
+//             } else if (link.target.id === current.id) {
+//                 neighbor = link.source;
+//             }
 
-            if (neighbor) {
-                let tentative_gScore = gScore.get(current.id) + heuristic(current, neighbor);
+//             if (neighbor) {
+//                 let tentative_gScore = gScore.get(current.id) + heuristic(current, neighbor);
 
-                if (tentative_gScore < gScore.get(neighbor.id)) {
-                    // Este caminho é o melhor até agora
-                    cameFrom.set(neighbor.id, current);
-                    gScore.set(neighbor.id, tentative_gScore);
-                    fScore.set(neighbor.id, tentative_gScore + heuristic(neighbor, destination));
+//                 if (tentative_gScore < gScore.get(neighbor.id)) {
+//                     // Este caminho é o melhor até agora
+//                     cameFrom.set(neighbor.id, current);
+//                     gScore.set(neighbor.id, tentative_gScore);
+//                     fScore.set(neighbor.id, tentative_gScore + heuristic(neighbor, destination));
 
-                    // Adiciona o vizinho ao openSet se ainda não estiver lá
-                    if (!openSet.includes(neighbor)) {
-                        openSet.push(neighbor);
-                    }
-                }
-            }
-        });
-    }
+//                     // Adiciona o vizinho ao openSet se ainda não estiver lá
+//                     if (!openSet.includes(neighbor)) {
+//                         openSet.push(neighbor);
+//                     }
+//                 }
+//             }
+//         });
+//     }
 
-    // Se não encontrar caminho
-    return [];
-}
+//     // Se não encontrar caminho
+//     return [];
+// }
 
 // Função para destacar o caminho entre a origem e o destino
 function highlightPath() {
     const [origin, destination] = selectedNodes;
 
+    console.log("Origem:", origin);
+    console.log("Destino:", destination);
+
     // Encontra o caminho entre origem e destino usando A*
-    const path = aStar(origin, destination);
+    const path = aEstrela.aEstrela(origin, destination);
 
     // Destacar as arestas no caminho
     link
