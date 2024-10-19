@@ -1,26 +1,35 @@
-import teste from './ideia.js';
+import grafo from './algoritmos/aestrela.js';
+import aestrela from './algoritmos/aestrela.js';
 
 // Definindo os dados do grafo
 const nodes = [
-    { id: "Galpão", x: 22, y: 2 },
-    { id: "Saida emergencia Bloco F", x: 22, y: 6 },
-    { id: "Bloco F", x: 23, y: 11 },
-    { id: "F01", x: 25, y: 14 },
-    { id: "F02", x: 25, y: 12 },
-    // ... adicione mais nós conforme necessário
 ];
 
 const links = [
-    { source: "Galpão", target: "Saida emergencia Bloco F" },
-    { source: "Saida emergencia Bloco F", target: "Bloco F" },
-    { source: "Bloco F", target: "F01" },
-    { source: "Bloco F", target: "F02" },
-    // ... adicione mais conexões (links) conforme necessário
+    { source: "Galpão", target: "Saida de emergencia do bloco F" },
+    { source: "Galpão", target: "Bloco H" },
+    { source: "Galpão", target: "Almoxarifado" },
 ];
 
+const loadNodes = async () => {Object.keys(grafo.grafo).forEach(chave => {
+    const vertice = grafo.grafo[chave];
+    if(vertice.xx && vertice.yy)
+        nodes.push({ id: vertice.nome, x: vertice.xx, y: vertice.yy });
+})}
+
+const loadLinks = async () => {Object.keys(grafo.grafo).forEach(chave => {
+    const vertice = grafo.grafo[chave];
+    vertice.adjacentes.forEach(adjacente => {
+        links.push({ source: vertice.nome, target: adjacente.vertice.nome });
+    });
+})}
+
+await loadNodes();
+// await loadLinks();
+
 // Dimensões do SVG
-const width = 800;
-const height = 600;
+const width = window.innerWidth;
+const height = window.innerHeight;
 
 // Criando o SVG
 const svg = d3.select("svg")
@@ -31,8 +40,8 @@ let selectedNodes = []; // Array para armazenar a origem e o destino selecionado
 
 // Simulação de força (para layout de grafo)
 const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.id).distance(50))
-    .force("charge", d3.forceManyBody().strength(-200))
+    .force("link", d3.forceLink(links).id(d => d.id).distance(150))
+    .force("charge", d3.forceManyBody().strength(-100))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
 
@@ -49,7 +58,7 @@ const node = svg.selectAll(".node")
     .attr("class", "node")
     .attr("r", 10)
     .on("click", handleNodeClick)  // Adicionando o evento de clique aos nós
-    .call(drag(simulation));
+    // .call(drag(simulation));
 
 // Adicionando rótulos aos nós
 const labels = svg.selectAll("text")
@@ -77,29 +86,29 @@ function ticked() {
 }
 
 // Função de arrastar os nós
-function drag(simulation) {
-    function dragstarted(event) {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        event.subject.fx = event.subject.x;
-        event.subject.fy = event.subject.y;
-    }
+// function drag(simulation) {
+//     function dragstarted(event) {
+//         if (!event.active) simulation.alphaTarget(0.3).restart();
+//         event.subject.fx = event.subject.x;
+//         event.subject.fy = event.subject.y;
+//     }
 
-    function dragged(event) {
-        event.subject.fx = event.x;
-        event.subject.fy = event.y;
-    }
+//     function dragged(event) {
+//         event.subject.fx = event.x;
+//         event.subject.fy = event.y;
+//     }
 
-    function dragended(event) {
-        if (!event.active) simulation.alphaTarget(0);
-        event.subject.fx = null;
-        event.subject.fy = null;
-    }
+//     function dragended(event) {
+//         if (!event.active) simulation.alphaTarget(0);
+//         event.subject.fx = null;
+//         event.subject.fy = null;
+//     }
 
-    return d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended);
-}
+//     return d3.drag()
+//         .on("start", dragstarted)
+//         .on("drag", dragged)
+//         .on("end", dragended);
+// }
 
 // Função de clique no nó
 function handleNodeClick(event, d) {
@@ -109,7 +118,6 @@ function handleNodeClick(event, d) {
 
         // Mudando a cor do nó selecionado
         d3.select(this).style("fill", "orange");
-        console.log(teste.teste())
 
         // Se dois nós foram selecionados, destacar o caminho
         if (selectedNodes.length === 2) {
